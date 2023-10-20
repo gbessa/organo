@@ -1,7 +1,7 @@
 import './Team.css'
 import Card from '../Card/Card'
 
-const Team = ( {id, name, primaryColor, secondaryColor, collaborators, onDeleteCollaborator, onChangeColor} ) => {
+const Team = ( {id, name, primaryColor, secondaryColor, collaborators, onDeleteCollaborator, onChangeColor, onFavorite} ) => {
     return (        
         collaborators.length > 0 &&
         <section className='team' style={{backgroundColor: secondaryColor}}>
@@ -18,7 +18,9 @@ const Team = ( {id, name, primaryColor, secondaryColor, collaborators, onDeleteC
                         description={collaborator.role}
                         imagePath={collaborator.imagePath}
                         backgroundColor={primaryColor}
+                        favorited={collaborator.favorited}
                         onDelete={onDeleteCollaborator}
+                        onFavorite={onFavorite}
                     />
                 )}
             </div>            

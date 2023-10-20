@@ -43,3 +43,7 @@
     top: -10px;
     cursor: pointer;
 }
+
+.favorited {
+    margin-top: 20px;
+}

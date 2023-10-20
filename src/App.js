@@ -48,6 +48,7 @@ function App() {
   const initialCollaborators = [
     {
       id: uuidv4(),
+      favorited: false,
       name: 'Gustavo Bessa',
       role: '.NET Developer',
       imagePath: 'https://github.com/gbessa.png',
@@ -55,6 +56,7 @@ function App() {
     },
     {
       id: uuidv4(),
+      favorited: false,
       name: 'Gustavo Bessa',
       role: 'JAVA Developer',
       imagePath: 'https://github.com/gbessa.png',
@@ -62,6 +64,7 @@ function App() {
     },
     {
       id: uuidv4(),
+      favorited: false,
       name: 'Leandro Siciliano',
       role: 'Sr. Java Developer',
       imagePath: 'https://github.com/ltsiciliano.png',
@@ -69,6 +72,7 @@ function App() {
     },
     {
       id: uuidv4(),
+      favorited: false,
       name: 'Todd McLeod',
       role: 'Sr. Golang Developer',
       imagePath: 'https://github.com/GoesToEleven.png',
@@ -76,6 +80,7 @@ function App() {
     },
     {
       id: uuidv4(),
+      favorited: false,
       name: 'Marcelo Guimaraes',
       role: 'React Developer',
       imagePath: 'https://github.com/MarceloGuimaraes.png',
@@ -83,6 +88,7 @@ function App() {
     },
     {
       id: uuidv4(),
+      favorited: false,
       name: 'Joyces Aquino',
       role: 'Software Developer',
       imagePath: 'https://github.com/joycesaquino.png',
@@ -90,6 +96,7 @@ function App() {
     },
     {
       id: uuidv4(),
+      favorited: false,
       name: 'Igor Andrade',
       role: 'Software Developer',
       imagePath: 'https://github.com/IgorAndrade.png',
@@ -116,12 +123,23 @@ function App() {
     setCollaborators(collaborators.filter(collaborator => collaborator.id !== id))
   }
 
-  const changeTeamColor = (color, teamId) => { setTeams(teams.map(team => {
-    if (team.id === teamId) {
-      team.color = color
-    }
+  const changeTeamColor = (color, teamId) => { 
+    setTeams(teams.map(team => {
+      if (team.id === teamId) {
+        team.color = color
+      }
     return team
   })) }
+
+  function handleOnFavorite(id) {
+    setCollaborators(
+      collaborators.map(collaborator => {
+        if (collaborator.id === id) {
+          collaborator.favorited = !collaborator.favorited          
+        }
+        return collaborator
+      }))
+  }
 
   return (    
     <div className="App">
@@ -141,6 +159,7 @@ function App() {
         collaborators={collaborators.filter(collaborator => collaborator.team === team.name)}
         onDeleteCollaborator={deleteCollaborator}
         onChangeColor={changeTeamColor}
+        onFavorite={handleOnFavorite}
       />)}      
     </div>
   );
