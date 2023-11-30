@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import hexToRgba from 'hex-to-rgba';
 import { v4 as uuidv4 } from 'uuid';
 import Banner from './components/Banner/Banner';
@@ -6,6 +6,30 @@ import Form from './components/Form/Form';
 import Team from './components/Team/Team';
 
 function App() {
+
+  const [breeds, setBreeds] = useState([])
+  const [searchedBreed, setSearchedBreed] = useState([])
+
+  useEffect(() => {
+    fetch('http://localhost:8080/doguinhos')
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      setBreeds(data)
+    })
+    .catch(error => console.error(error));
+  }, [])
+
+  useEffect(() => {
+    if (searchedBreed && searchedBreed.length >= 3) {
+      fetch('http://localhost:8080/doguinhos?nome=' + searchedBreed)
+      .then(response => response.json())
+      .then(data => {
+        setBreeds(data)
+      })
+      .catch(error => console.error(error));
+    }    
+  }, [searchedBreed])
 
   const [teams, setTeams] = useState([
     {
@@ -160,8 +184,15 @@ function App() {
         onDeleteCollaborator={deleteCollaborator}
         onChangeColor={changeTeamColor}
         onFavorite={handleOnFavorite}
-      />)}      
-    </div>
+      />)}
+
+      <input 
+        value ={searchedBreed} 
+        onChange={event => setSearchedBreed(event.target.value)}
+        type='text' 
+        placeholder='search breed'></input>
+      {breeds.map(breed => <h2>{breed.nome}</h2>)}
+    </div>    
   );
 }
 
